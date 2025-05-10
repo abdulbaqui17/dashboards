@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -13,7 +12,12 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <motion.div 
+      className="flex min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Sidebar 
         isCollapsed={isSidebarCollapsed} 
         setIsCollapsed={setIsSidebarCollapsed} 
@@ -24,12 +28,20 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
           isSidebarCollapsed ? "ml-20" : "ml-64",
           className
         )}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ 
+          duration: 0.3,
+          delay: 0.2,
+          ease: "easeOut"
+        }}
+        whileHover={{ scale: 1.01 }}
       >
-        {children}
+        <AnimatePresence mode="wait">
+          {children}
+        </AnimatePresence>
       </motion.main>
-    </div>
+    </motion.div>
   );
 }

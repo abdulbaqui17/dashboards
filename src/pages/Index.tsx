@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
@@ -45,6 +44,9 @@ const Analytics = () => {
       transition: {
         delay: i * 0.1,
         duration: 0.5,
+        type: "spring",
+        stiffness: 100,
+        damping: 10
       },
     }),
   };
@@ -90,10 +92,28 @@ const Analytics = () => {
         className="mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ 
+          duration: 0.5,
+          type: "spring",
+          stiffness: 100,
+          damping: 10
+        }}
       >
-        <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
-        <p className="text-muted-foreground">Track your key metrics and user engagement in real-time</p>
+        <motion.h1 
+          className="text-3xl font-bold"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          Analytics Dashboard
+        </motion.h1>
+        <motion.p 
+          className="text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Track your key metrics and user engagement in real-time
+        </motion.p>
       </motion.div>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
@@ -104,21 +124,48 @@ const Analytics = () => {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
+            whileHover={{ 
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400, damping: 10 }
+            }}
           >
-            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-shadow">
+            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">{metric.title}</p>
-                    <h3 className="text-2xl font-bold mt-1">{metric.value}</h3>
-                    <div className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                    <motion.p 
+                      className="text-sm text-muted-foreground"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.title}
+                    </motion.p>
+                    <motion.h3 
+                      className="text-2xl font-bold mt-1"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.value}
+                    </motion.h3>
+                    <motion.div 
+                      className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
                       {metric.positive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
                       <span className="text-sm ml-1">{metric.change} from last week</span>
-                    </div>
+                    </motion.div>
                   </div>
-                  <div className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}>
+                  <motion.div 
+                    className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 5,
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                  >
                     <metric.icon size={24} />
-                  </div>
+                  </motion.div>
                 </div>
               </CardContent>
             </Card>
@@ -130,9 +177,19 @@ const Analytics = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ 
+            delay: 0.4, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Visitors & Page Views</CardTitle>
             </CardHeader>
@@ -157,9 +214,19 @@ const Analytics = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          transition={{ 
+            delay: 0.5, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Monthly Conversions</CardTitle>
             </CardHeader>
@@ -185,9 +252,19 @@ const Analytics = () => {
           className="lg:col-span-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          transition={{ 
+            delay: 0.6, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Bounce Rate</CardTitle>
             </CardHeader>
@@ -222,14 +299,30 @@ const Analytics = () => {
           className="lg:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ 
+            delay: 0.7, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Live Visitor Map</CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-center h-[250px]">
-              <p className="text-muted-foreground">Geographic visualization coming soon...</p>
+              <motion.p 
+                className="text-muted-foreground"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                Geographic visualization coming soon...
+              </motion.p>
             </CardContent>
           </Card>
         </motion.div>

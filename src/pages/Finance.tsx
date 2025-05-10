@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -54,6 +53,9 @@ const Finance = () => {
       transition: {
         delay: i * 0.1,
         duration: 0.5,
+        type: "spring",
+        stiffness: 100,
+        damping: 10
       },
     }),
   };
@@ -99,10 +101,28 @@ const Finance = () => {
         className="mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ 
+          duration: 0.5,
+          type: "spring",
+          stiffness: 100,
+          damping: 10
+        }}
       >
-        <h1 className="text-3xl font-bold">Finance Dashboard</h1>
-        <p className="text-muted-foreground">Track your finances and budget progress</p>
+        <motion.h1 
+          className="text-3xl font-bold"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          Finance Dashboard
+        </motion.h1>
+        <motion.p 
+          className="text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Track your finances and budget progress
+        </motion.p>
       </motion.div>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
@@ -113,21 +133,48 @@ const Finance = () => {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
+            whileHover={{ 
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400, damping: 10 }
+            }}
           >
-            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-shadow">
+            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">{metric.title}</p>
-                    <h3 className="text-2xl font-bold mt-1">{metric.value}</h3>
-                    <div className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                    <motion.p 
+                      className="text-sm text-muted-foreground"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.title}
+                    </motion.p>
+                    <motion.h3 
+                      className="text-2xl font-bold mt-1"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.value}
+                    </motion.h3>
+                    <motion.div 
+                      className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
                       {metric.positive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
                       <span className="text-sm ml-1">{metric.change} since last month</span>
-                    </div>
+                    </motion.div>
                   </div>
-                  <div className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}>
+                  <motion.div 
+                    className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 5,
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                  >
                     <metric.icon size={24} />
-                  </div>
+                  </motion.div>
                 </div>
               </CardContent>
             </Card>
@@ -140,9 +187,19 @@ const Finance = () => {
           className="lg:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ 
+            delay: 0.4, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-2">
               <CardTitle>Income vs Expenses</CardTitle>
             </CardHeader>
@@ -170,12 +227,24 @@ const Finance = () => {
                 </TabsContent>
                 <TabsContent value="quarterly" className="mt-0">
                   <div className="flex items-center justify-center h-[300px]">
-                    <p className="text-muted-foreground">Quarterly data coming soon...</p>
+                    <motion.p 
+                      className="text-muted-foreground"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      Quarterly data coming soon...
+                    </motion.p>
                   </div>
                 </TabsContent>
                 <TabsContent value="yearly" className="mt-0">
                   <div className="flex items-center justify-center h-[300px]">
-                    <p className="text-muted-foreground">Yearly data coming soon...</p>
+                    <motion.p 
+                      className="text-muted-foreground"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      Yearly data coming soon...
+                    </motion.p>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -186,9 +255,19 @@ const Finance = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          transition={{ 
+            delay: 0.5, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader className="pb-4">
               <CardTitle>Expenses Breakdown</CardTitle>
             </CardHeader>
@@ -228,16 +307,34 @@ const Finance = () => {
           className="lg:col-span-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          transition={{ 
+            delay: 0.6, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Savings Goals</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 {savingsGoals.map((goal) => (
-                  <div key={goal.name}>
+                  <motion.div 
+                    key={goal.name}
+                    whileHover={{ 
+                      scale: 1.02,
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                    className="p-3 rounded-lg"
+                  >
                     <div className="flex justify-between mb-1">
                       <span className="font-medium">{goal.name}</span>
                       <span className="text-sm">
@@ -248,7 +345,7 @@ const Finance = () => {
                     <p className="text-xs text-muted-foreground mt-1">
                       {goal.percentage}% of goal reached
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </CardContent>
@@ -259,36 +356,45 @@ const Finance = () => {
           className="lg:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ 
+            delay: 0.7, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Recent Transactions</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {recentTransactions.map((transaction) => (
-                  <div 
-                    key={transaction.id} 
-                    className="flex items-center justify-between p-3 bg-background rounded-lg border border-border"
+                  <motion.div
+                    key={transaction.id}
+                    className="flex items-center justify-between p-3 rounded-lg bg-secondary/50"
+                    whileHover={{ 
+                      scale: 1.02,
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
                   >
-                    <div className="flex items-center">
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${
-                        transaction.amount > 0 ? 'bg-emerald-500/20 text-emerald-500' : 'bg-rose-500/20 text-rose-500'
-                      }`}>
-                        {transaction.amount > 0 ? <ArrowUpRight size={18} /> : <ArrowDownRight size={18} />}
-                      </div>
-                      <div>
-                        <p className="font-medium">{transaction.name}</p>
-                        <p className="text-xs text-muted-foreground">{transaction.date} • {transaction.category}</p>
-                      </div>
+                    <div>
+                      <p className="font-medium">{transaction.name}</p>
+                      <p className="text-sm text-muted-foreground">{transaction.category}</p>
                     </div>
-                    <span className={`font-medium ${
-                      transaction.amount > 0 ? 'text-emerald-500' : 'text-rose-500'
-                    }`}>
-                      {transaction.amount > 0 ? '+' : ''}{transaction.amount.toFixed(2)}
-                    </span>
-                  </div>
+                    <div className="text-right">
+                      <p className={`font-medium ${transaction.amount > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                        {transaction.amount > 0 ? '+' : ''}{transaction.amount.toFixed(2)}
+                      </p>
+                      <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </CardContent>

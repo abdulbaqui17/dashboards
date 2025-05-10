@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -90,6 +89,17 @@ const Developer = () => {
     }),
   };
 
+  const hoverVariants = {
+    initial: { scale: 1 },
+    hover: { 
+      scale: 1.02,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   const prStatusColors: Record<string, string> = {
     'Merged': 'bg-purple-500/20 text-purple-500 border-purple-500/20',
     'Open': 'bg-emerald-500/20 text-emerald-500 border-emerald-500/20',
@@ -131,6 +141,9 @@ const Developer = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-7 mb-6">
         <motion.div 
           className="lg:col-span-4"
+          variants={hoverVariants}
+          initial="initial"
+          whileHover="hover"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
@@ -157,6 +170,9 @@ const Developer = () => {
 
         <motion.div 
           className="lg:col-span-3"
+          variants={hoverVariants}
+          initial="initial"
+          whileHover="hover"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
@@ -187,6 +203,9 @@ const Developer = () => {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
         <motion.div
+          variants={hoverVariants}
+          initial="initial"
+          whileHover="hover"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
@@ -208,7 +227,15 @@ const Developer = () => {
                 </TableHeader>
                 <TableBody>
                   {pullRequests.map((pr) => (
-                    <TableRow key={pr.id}>
+                    <motion.tr
+                      key={pr.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      whileHover={{ 
+                        backgroundColor: "rgba(59, 130, 246, 0.1)",
+                        transition: { duration: 0.2 }
+                      }}
+                    >
                       <TableCell className="font-medium">{pr.id}</TableCell>
                       <TableCell>{pr.title}</TableCell>
                       <TableCell>{pr.author}</TableCell>
@@ -224,7 +251,7 @@ const Developer = () => {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-muted-foreground">{pr.created}</TableCell>
-                    </TableRow>
+                    </motion.tr>
                   ))}
                 </TableBody>
               </Table>
@@ -233,6 +260,9 @@ const Developer = () => {
         </motion.div>
 
         <motion.div
+          variants={hoverVariants}
+          initial="initial"
+          whileHover="hover"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
@@ -244,9 +274,14 @@ const Developer = () => {
             <CardContent>
               <div className="space-y-4">
                 {buildStatuses.map((build) => (
-                  <div 
+                  <motion.div 
                     key={build.id}
                     className="bg-background border border-border rounded-lg p-3"
+                    whileHover={{ 
+                      scale: 1.02,
+                      backgroundColor: "rgba(59, 130, 246, 0.1)",
+                      transition: { duration: 0.2 }
+                    }}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
@@ -270,7 +305,7 @@ const Developer = () => {
                       <span>{build.time}</span>
                       <span>Duration: {build.duration}</span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </CardContent>

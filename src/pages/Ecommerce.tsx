@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -57,6 +56,9 @@ const Ecommerce = () => {
       transition: {
         delay: i * 0.1,
         duration: 0.5,
+        type: "spring",
+        stiffness: 100,
+        damping: 10
       },
     }),
   };
@@ -102,10 +104,28 @@ const Ecommerce = () => {
         className="mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ 
+          duration: 0.5,
+          type: "spring",
+          stiffness: 100,
+          damping: 10
+        }}
       >
-        <h1 className="text-3xl font-bold">E-commerce Dashboard</h1>
-        <p className="text-muted-foreground">Manage your online store and track performance</p>
+        <motion.h1 
+          className="text-3xl font-bold"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          E-commerce Dashboard
+        </motion.h1>
+        <motion.p 
+          className="text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Manage your online store and track performance
+        </motion.p>
       </motion.div>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
@@ -116,21 +136,48 @@ const Ecommerce = () => {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
+            whileHover={{ 
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400, damping: 10 }
+            }}
           >
-            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-shadow">
+            <Card className="overflow-hidden bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">{metric.title}</p>
-                    <h3 className="text-2xl font-bold mt-1">{metric.value}</h3>
-                    <div className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                    <motion.p 
+                      className="text-sm text-muted-foreground"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.title}
+                    </motion.p>
+                    <motion.h3 
+                      className="text-2xl font-bold mt-1"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {metric.value}
+                    </motion.h3>
+                    <motion.div 
+                      className={`flex items-center mt-1 ${metric.positive ? 'text-emerald-500' : 'text-rose-500'}`}
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
                       <TrendingUp size={16} />
                       <span className="text-sm ml-1">{metric.change} from last month</span>
-                    </div>
+                    </motion.div>
                   </div>
-                  <div className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}>
+                  <motion.div 
+                    className={`p-3 rounded-full bg-secondary border border-border ${metric.color}`}
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 5,
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                  >
                     <metric.icon size={24} />
-                  </div>
+                  </motion.div>
                 </div>
               </CardContent>
             </Card>
@@ -143,9 +190,19 @@ const Ecommerce = () => {
           className="lg:col-span-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ 
+            delay: 0.4, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Monthly Sales</CardTitle>
             </CardHeader>
@@ -169,9 +226,19 @@ const Ecommerce = () => {
           className="lg:col-span-3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          transition={{ 
+            delay: 0.5, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Sales by Category</CardTitle>
             </CardHeader>
@@ -211,9 +278,19 @@ const Ecommerce = () => {
           className="lg:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          transition={{ 
+            delay: 0.6, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle>Recent Orders</CardTitle>
             </CardHeader>
@@ -230,7 +307,14 @@ const Ecommerce = () => {
                 </TableHeader>
                 <TableBody>
                   {recentOrders.map((order) => (
-                    <TableRow key={order.id}>
+                    <motion.tr 
+                      key={order.id}
+                      whileHover={{ 
+                        scale: 1.01,
+                        backgroundColor: "rgba(255, 255, 255, 0.05)",
+                        transition: { type: "spring", stiffness: 400, damping: 10 }
+                      }}
+                    >
                       <TableCell className="font-medium">{order.id}</TableCell>
                       <TableCell>{order.customer}</TableCell>
                       <TableCell>{order.date}</TableCell>
@@ -248,7 +332,7 @@ const Ecommerce = () => {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">{order.total}</TableCell>
-                    </TableRow>
+                    </motion.tr>
                   ))}
                 </TableBody>
               </Table>
@@ -257,38 +341,46 @@ const Ecommerce = () => {
         </motion.div>
 
         <motion.div
+          className="lg:col-span-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ 
+            delay: 0.7, 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 10
+          }}
+          whileHover={{ 
+            scale: 1.01,
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
         >
-          <Card className="h-full bg-secondary border-none shadow-md">
+          <Card className="h-full bg-secondary border-none shadow-md hover:shadow-lg transition-all duration-300">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Package size={18} className="text-dashboard-ecommerce" />
-                Low Stock Alerts
-              </CardTitle>
+              <CardTitle>Low Stock Alert</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {lowStockProducts.map((product) => (
-                  <div key={product.sku} className="border border-border p-4 rounded-lg">
-                    <div className="flex justify-between">
-                      <div>
-                        <h4 className="font-medium">{product.name}</h4>
-                        <p className="text-sm text-muted-foreground">SKU: {product.sku}</p>
-                      </div>
-                      <Badge variant="destructive">{product.stock} left</Badge>
+                  <motion.div
+                    key={product.sku}
+                    className="flex items-center justify-between p-3 rounded-lg bg-secondary/50"
+                    whileHover={{ 
+                      scale: 1.02,
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
+                  >
+                    <div>
+                      <p className="font-medium">{product.name}</p>
+                      <p className="text-sm text-muted-foreground">{product.sku}</p>
                     </div>
-                    <div className="mt-2 h-2 bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-rose-500" 
-                        style={{ width: `${(product.stock / product.threshold) * 100}%` }}
-                      />
+                    <div className="text-right">
+                      <p className="text-rose-500 font-medium">{product.stock} left</p>
+                      <p className="text-sm text-muted-foreground">Threshold: {product.threshold}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Threshold: {product.threshold} units
-                    </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </CardContent>
